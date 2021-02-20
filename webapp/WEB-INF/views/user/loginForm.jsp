@@ -6,7 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>JBlog</title>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js" ></script>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 </head>
 <body>

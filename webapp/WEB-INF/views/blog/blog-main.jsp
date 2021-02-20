@@ -27,7 +27,7 @@
 					<!-- 사용자업로드 이미지 -->
 					<%-- <img id="proImg" src=""> --%>
 					
-					<div id="nick">정우성(hijava)님</div>
+					<div id="nick">${blogVo.blogTitle}</div>
 				</div>
 				<div id="cate">
 					<div class="text-left">
@@ -47,11 +47,11 @@
 			<!-- profilecate_area -->
 			
 			<div id="post_area">
-				
+				<!-- 세션에서 정보를 출력할시 타인의 블로그는 제대로 표시가 안됨 -->
 				<div id="postBox" class="clearfix">
 						<div id="postTitle" class="text-left"><strong>08.페이징</strong></div>
 						<div id="postDate" class="text-left"><strong>2020/07/23</strong></div>
-						<div id="postNick">정우성(hijava)님</div>
+						<div id="postNick">${authUser.userName}(${authUser.id})님</div>
 				</div>
 				<!-- //postBox -->
 			

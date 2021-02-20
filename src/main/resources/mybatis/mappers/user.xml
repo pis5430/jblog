@@ -17,4 +17,27 @@
 		]]>
 	</insert>
 
+	<!-- 회원정보 가져오기 : 회원가입 아이디체크 -->
+	<select id="selectById" parameterType="String" resultType="UserVo">
+		<![CDATA[
+			select userNo,
+				   id,
+			       userName
+			from users
+			where id=#{id}
+		]]>	
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="selectUser" parameterType="UserVo" resultType="UserVo">
+		<![CDATA[
+			select id,
+				   userNo,
+			       userName
+			from users
+			where id=#{id}
+			and password=#{password}
+		]]>	
+	</select>
+
 </mapper>

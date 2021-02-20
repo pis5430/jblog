@@ -19,5 +19,20 @@ public class UserDao {
 		
 		return sqlSession.insert("user.joinInsert", userVo);
 	}
+	
+	//아이디 체크
+	public UserVo selectOne(String id) {
+		System.out.println("dao --> selectOne -- id :" + id);
+		
+		return sqlSession.selectOne("user.selectById", id);
+	}
+	
+	//로그인 --> 회원정보 가져오기 (메소드 오버로딩)
+	public UserVo selectUser(UserVo userVo) {
+		System.out.println("dao --> login");
+		System.out.println(userVo);
+				
+		return sqlSession.selectOne("user.selectUser", userVo);
+	}
 
 }
