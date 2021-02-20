@@ -8,7 +8,7 @@
 			<c:choose>
 				<c:when test="${sessionScope.authUser == null}">
 				<!-- 로그인 전 메뉴 -->
-				<li><a class="btn_s" href="${pageContext.request.contextPath}/user/login" >로그인</a></li>
+				<li><a class="btn_s" href="${pageContext.request.contextPath}/user/loginForm" >로그인</a></li>
 				</c:when>
 	 			<c:otherwise>
 				<!-- 로그인 후 메뉴 -->
