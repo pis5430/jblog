@@ -26,6 +26,16 @@
 			where id=#{id}
 		]]>	
 	</select>
+	
+	<!-- 블로그 기본설정 update -->
+	<update id="basicUpdate" parameterType="BlogVo">
+		<![CDATA[
+			update blog
+			set blogTitle = #{blogTitle},
+			    logoFile = #{logoFile}
+			where id = #{id}
+		]]>
+	</update>
 
 
 

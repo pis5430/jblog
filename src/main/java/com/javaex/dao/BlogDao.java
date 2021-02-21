@@ -28,6 +28,16 @@ public class BlogDao {
 		
 	}
 	
+	//내 블로그 기본정보 수정 
+	public int blogBasicUpdate(BlogVo blogVo) {		
+		System.out.println("blogDao blogBasicUpdate blogVo :" + blogVo);		
+		return sqlSession.update("blog.basicUpdate", blogVo);
+		
+	}
+	
+	
+	
+	
 	
 	
 	
