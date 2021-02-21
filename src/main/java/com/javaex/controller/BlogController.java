@@ -38,26 +38,45 @@ public class BlogController {
 		
 		//header에 표시될 정보
 		model.addAttribute("blogVo", blogService.blogSelectOne(id));
-		
+	
 		return "blog/admin/blog-admin-basic";
 		
 	}
 	
 	//내블로그 관리 - 기본설정 수정(블로그 제목, 로고파일)
 	@RequestMapping(value = "/basicUpdate", method = { RequestMethod.GET, RequestMethod.POST })
-	public String blogBasicUpdate(@ModelAttribute BlogVo blogVo, @RequestParam("file") MultipartFile file) {
-		
+	public String blogBasicUpdate(@ModelAttribute BlogVo blogVo, @RequestParam("file") MultipartFile file) {	
 		System.out.println(blogVo); //id ,블로그 제목 , 로고파일(보충필요)
 		
 		//로고파일 보충하기 (이미지 업데이트되게 )
 		System.out.println("블로그 컨트롤러 file 확인 :"+file);
-		
-		
 		//기본설정 수정하기 
 		blogService.blogBasicUpdate(blogVo,file);
-		
-		
 		return "redirect:/"+blogVo.getId()+"/admin/basic"; //기본수정화면으로 리다리렉트
+	}
+	
+	//내 블로그 관리 - 카테고리
+	@RequestMapping(value = "/{id}/admin/category", method = { RequestMethod.GET, RequestMethod.POST })
+	public String blogCategory(@PathVariable("id") String id, Model model) {
+		System.out.println("내 블로그 관리 - 카테고리");
+		
+		//header에 표시될 정보
+		model.addAttribute("blogVo", blogService.blogSelectOne(id));
+	
+		return "blog/admin/blog-admin-cate";
+		
+	}
+	
+	//내 블로그 관리 - 글작성
+	@RequestMapping(value = "/{id}/admin/write", method = { RequestMethod.GET, RequestMethod.POST })
+	public String blogWrite(@PathVariable("id") String id, Model model) {
+		System.out.println("내 블로그 관리 -글장석");
+		
+		//header에 표시될 정보
+		model.addAttribute("blogVo", blogService.blogSelectOne(id));
+	
+		return "blog/admin/blog-admin-write";
+		
 	}
 	
 
