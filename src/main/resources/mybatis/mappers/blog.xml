@@ -15,7 +15,6 @@
 	</insert>
 
 
-
 	<!-- 개인 블로그 정보 불러오기 -->
 	<select id="blogSelectOne" parameterType="String" resultType="BlogVo">
 		<![CDATA[

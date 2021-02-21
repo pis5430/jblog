@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cate">
+
+	<!-- 개인 블로그 - 카테고리 리스트 -->
+	<select id="cateList"  parameterType="string" resultType="CategoryVo">
+		<![CDATA[
+			select c.cateNo,
+					c.id,
+					c.cateName,
+					c.description,
+					count(p.cateNo) postCount
+			from category c , post p
+			where c.cateNo = p.cateNo(+)
+			and c.id = #{id}
+			group by c.cateNo, 
+					  c.id,
+			          c.cateName,
+					  c.description
+			order by c.cateNo desc
+		]]>
+	</select>
+	
+	
+	<!-- post갯수 ,  카테고리별 ,id일치 
+	<select id="postCount"  parameterType="string" resultType="int" >
+		<![CDATA[
+			select count(*) 
+			from post , category
+			where category.cateNo = post.cateNo
+			and category.id = #{id}
+		]]>
+	</select>
+-->
+
+
+
+</mapper>

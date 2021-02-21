@@ -9,7 +9,7 @@
 <title>JBlog</title>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/jblog.css">
 
-
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery/jquery-1.12.4.js" ></script>
 </head>
 
 <body>
@@ -21,9 +21,9 @@
 
 		<div id="content">
 			<ul id="admin-menu" class="clearfix">
-				<li class="tabbtn selected"><a href="">기본설정</a></li>
-				<li class="tabbtn"><a href="">카테고리</a></li>
-				<li class="tabbtn"><a href="">글작성</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
+				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/write">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
@@ -48,25 +48,6 @@
 		      		</thead>
 		      		<tbody id="cateList">
 		      			<!-- 리스트 영역 -->
-		      			<tr>
-							<td>1</td>
-							<td>자바프로그래밍</td>
-							<td>7</td>
-							<td>자바기초와 객체지향</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
-						<tr>
-							<td>2</td>
-							<td>오라클</td>
-							<td>5</td>
-							<td>오라클 설치와 sql문</td>
-						    <td class='text-center'>
-						    	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
-						    </td>
-						</tr>
-						<!-- 리스트 영역 -->
 					</tbody>
 				</table>
       	
@@ -104,8 +85,96 @@
 	</div>
 	<!-- //wrap -->
 </body>
+<script type="text/javascript">
+
+	//시작되면 cateList 뿌려줘야함
+	$("document").ready( function(){
+		
+	//진입 테스트
+	console.log("ready")
+		
+	//리스트 출력
+	fetchList();	
+	
+	});
+
+	//카테고리 추가버튼 클릭할때
+	$("#btnAddCate").on("click" , function(){
+		console.log("카테고리 추가버튼 클릭")
+		
+		
+	})
+	
+	
+	//방명록 글 정도  + html조합하여 화면에 출력
+	function render(categoryVo , updown){
+		
+		//문자열로 만듬 , 소문자만 인식가능 ""안에
+  		var str = "";
+		str += "<tr>";
+		str += "	<td>"+categoryVo.cateNo+"</td>";
+		str += "	<td>"+categoryVo.cateName+"</td>";
+		str += "	<td></td>";
+		str += "	<td>"+categoryVo.description+"</td>";
+		str += "	<td class='text-center'>";
+		str += "		<img class='btnCateDel' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
+		str += "	</td>";
+		str += "</tr>";
+		
+		//<tr>
+		//<td>2</td>
+		//<td>오라클</td>
+		//<td>5</td>
+		//<td>오라클 설치와 sql문</td>
+	    //<td class='text-center'>
+	    //	<img class="btnCateDel" src="${pageContext.request.contextPath}/assets/images/delete.jpg">
+	    //</td>
+		//</tr>
+		
+		console.log(categoryVo);
+			
+		if(updown == 'down'){
+			$("#cateList").append(str);
+		}else if(updown == 'up'){
+			$("#cateList").prepend(str);
+		}else{
+			console.log("방향 미지정");
+		}		
+		
+	}
+	
+	
+	//category 리스트 출력
+	function fetchList(){
+		
+		$.ajax({
+			//보낼때
+			url : "${pageContext.request.contextPath}/api/cate/cateList",		
+			type : "post",
+			//contentType : "application/json",
+			data : {id :'${authUser.id}'},
+
+			//받을때
+			dataType : "json",
+			success : function(cateList){
+				/*성공시 처리해야될 코드 작성*/
+				console.log(cateList); //잘 들어갔는지 확인 
+
+				//게스트 정보 출력
+				for(var i=0; i<cateList.length; i++){
+				render(cateList[i] , "down");
+				}
+			
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+	};
+	
 
 
 
 
+</script>
 </html>
