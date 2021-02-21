@@ -29,9 +29,10 @@ public class UserService {
 		blogVo.setBlogTitle(userVo.getUserName()+"의 블로그입니다.");
 		blogVo.setLogoFile("/assets/images/spring-logo.jpg"); //이미지는 기본설정
 		
-		//개인 블로그 생성
+		//회원가입
 		userDao.insert(userVo);
 		
+		//개인블로그 생성
 		return blogDao.blogInsert(blogVo);
 	}
 	

@@ -23,7 +23,7 @@
 	</select>
 	
 	
-	<!-- post갯수 ,  카테고리별 ,id일치 
+	<!-- post갯수 ,  카테고리별 ,id일치  - 서브쿼리로 넣는게 좀더 간결한것 같음..
 	<select id="postCount"  parameterType="string" resultType="int" >
 		<![CDATA[
 			select count(*) 
@@ -32,7 +32,7 @@
 			and category.id = #{id}
 		]]>
 	</select>
--->
+	-->
 
 
 
