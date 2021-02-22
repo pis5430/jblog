@@ -92,28 +92,29 @@ public class BlogService {
 	
 	
 	//블로그 post 데이터 조회
-	public Map<String, Object> postList(int cateNo, int postNo) {
-		System.out.println("blogService.blogList() cateNo :"+cateNo +" postNo :" +postNo );
+	public Map<String, Object> postList(PostVo postVo) {
+		System.out.println("blogService.blogList() postVo" +postVo );
 		
 		Map<String, Object> tMap = new HashMap<String, Object>();
 		
+		int cateNo = postVo.getCateNo();
+		
 		//해당 카테고리에 연결된 postList
 		List<PostVo> postList = postDao.postList(cateNo);
+		tMap.put("postList", postList);
 		
-		
-		if(postList.size() != 0) { //postList의 갯수가 0보다 많을때
-			//postNo가 0 일때
-			if(postNo == 0) {	
+		//post 갯수가 0이 아니면 포스트 가져오기
+		if(postList.size() != 0) {			
+			int postNo = postVo.getPostNo();
+			
+			if(postNo == 0) {
 				postNo = postList.get(0).getPostNo();
 			}
+			
+			tMap.put("postVo",postDao.postSelect(postNo) );
+			
 		}
 		
-		PostVo postVo = postDao.postSelect(postNo);
-		
-		System.out.println("postList :" +postList + " postVo :"+postVo);
-		
-		tMap.put("postList", postList);
-		tMap.put("postVo", postVo);
 		
 		return tMap;
 	}

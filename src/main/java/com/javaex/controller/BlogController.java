@@ -32,10 +32,9 @@ public class BlogController {
 	//블로그 main(header에서 블로그로 집입할때 id가져오기)
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET, RequestMethod.POST })
 	public String blogMain(@PathVariable("id") String id, Model model,
-							@RequestParam(value="cateNo", required = false, defaultValue="-1") int cateNo,
-							@RequestParam(value="postNo", required = false, defaultValue="-1") int postNo) {
+							PostVo postVo) {
 		
-		System.out.println("블로그 컨트롤러 main , id : " +id +" cateNo : " +cateNo + " postNo : " +postNo);
+		System.out.println("블로그 컨트롤러 main , id : " +id );
 		
 		//main페이지에 표시될 정보
 		//model.addAttribute("blogVo", blogService.blogSelectOne(id));
@@ -48,7 +47,7 @@ public class BlogController {
 		
 		//blog생성
 		if(blogVo != null) {	
-			Map<String, Object> tMap = blogService.postList(cateNo, postNo);
+			Map<String, Object> tMap = blogService.postList(postVo);
 			
 			model.addAttribute("blogVo", blogVo);
 			System.out.println("blogVo : " + blogVo);
