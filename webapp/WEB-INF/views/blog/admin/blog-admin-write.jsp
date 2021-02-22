@@ -22,12 +22,12 @@
 			<ul id="admin-menu" class="clearfix">
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
 				<li class="tabbtn"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
-				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/write">글작성</a></li>
+				<li class="tabbtn selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/writeForm">글작성</a></li>
 			</ul>
 			<!-- //admin-menu -->
 			
-			<div id="admin-content">
-				<form action="" method="">
+			<div id="admin-content"> 
+				<form action="${pageContext.request.contextPath}/${authUser.id}/admin/write" method="">
 			      	<table id="admin-write">
 			      		<colgroup>
 							<col style="width: 100px;">
@@ -41,11 +41,16 @@
 				      		</td>
 				      		<td>
 				      			<select name="cateNo">
+				      				<!-- 카테고리 리스트 영역 -->				      				
+				      				<c:forEach items="${cList}" var="cateVo">
+				      					<option value="${cateVo.cateNo}">${cateVo.cateName}</option>
+				      				</c:forEach>			      		
 				      				<!-- 카테고리 리스트 영역 -->
+				      				<!--
 				      				<option value="">자바프로그래밍</option>
 				      				<option value="">오라클</option>
-				      				<!-- 카테고리 리스트 영역 -->
-				      			</select>
+				      				-->
+				      			</select>	
 				      		</td>
 			      		</tr>
 			      		<tr>

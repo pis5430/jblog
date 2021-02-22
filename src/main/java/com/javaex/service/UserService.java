@@ -39,10 +39,8 @@ public class UserService {
 	//회원가입 - 아이디 체크
 	public String idcheck(String id) {
 		System.out.println("userService idcheck id = " + id);
-		
-		
-		UserVo userVo = userDao.selectOne(id);
-		
+
+		UserVo userVo = userDao.selectOne(id);	
 		String result ="";
 		
 		if(userVo==null) {

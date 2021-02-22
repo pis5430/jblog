@@ -1,5 +1,7 @@
 package com.javaex.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,13 +13,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.service.BlogService;
+import com.javaex.service.CategoryService;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
+import com.javaex.vo.PostVo;
 
 @Controller
 public class BlogController {
 	
 	@Autowired
 	private BlogService blogService;
+	
+	@Autowired
+	private CategoryService categoryService;
 
 	
 	//블로그 main(header에서 블로그로 집입할때 id가져오기)
@@ -55,7 +63,7 @@ public class BlogController {
 		return "redirect:/"+blogVo.getId()+"/admin/basic"; //기본수정화면으로 리다리렉트
 	}
 	
-	//내 블로그 관리 - 카테고리
+	//내 블로그 관리 - 카테고리 폼
 	@RequestMapping(value = "/{id}/admin/category", method = { RequestMethod.GET, RequestMethod.POST })
 	public String blogCategory(@PathVariable("id") String id, Model model) {
 		System.out.println("내 블로그 관리 - 카테고리");
@@ -67,15 +75,36 @@ public class BlogController {
 		
 	}
 	
-	//내 블로그 관리 - 글작성
-	@RequestMapping(value = "/{id}/admin/write", method = { RequestMethod.GET, RequestMethod.POST })
-	public String blogWrite(@PathVariable("id") String id, Model model) {
-		System.out.println("내 블로그 관리 -글장석");
+	//내 블로그 관리 - 글작성 폼 (카테고리 제목 불러와야함)
+	@RequestMapping(value = "/{id}/admin/writeForm", method = { RequestMethod.GET, RequestMethod.POST })
+	public String blogWriteForm(@PathVariable("id") String id,Model model) {
+		System.out.println("내 블로그 관리 -글작성 폼");
 		
 		//header에 표시될 정보
 		model.addAttribute("blogVo", blogService.blogSelectOne(id));
+		
+		//카테고리 리스트 불러오기(제목)
+		List<CategoryVo> categoryList = categoryService.cateList(id);
+		model.addAttribute("cList", categoryList);
 	
 		return "blog/admin/blog-admin-write";
+		
+	}
+	
+	
+	//내 블로그 관리 - 글작성(리다이렉트에id필요)
+	@RequestMapping(value = "/{id}/admin/write", method = { RequestMethod.GET, RequestMethod.POST })
+	public String blogWrite(@PathVariable("id") String id, @ModelAttribute PostVo postVo) {
+		System.out.println("내 블로그 관리 -글작성");
+		
+		//블로그 포스트에 글쓰기
+		blogService.blogWrite(postVo);
+		
+		
+		System.out.println("postVo : " + postVo + " id :" + id);
+		
+	
+		return "redirect:/" + id + "/admin/writeForm"; //writeForm으로 리다이렉트
 		
 	}
 	

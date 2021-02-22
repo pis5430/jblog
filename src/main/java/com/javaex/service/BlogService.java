@@ -11,13 +11,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaex.dao.BlogDao;
+import com.javaex.dao.PostDao;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.PostVo;
 
 @Service
 public class BlogService {
 	
 	@Autowired
 	private BlogDao blogDao;
+	
+	@Autowired
+	private PostDao postDao;
 	
 	
 	//블로그 진입(주소에 쓸 id 필요)
@@ -72,9 +77,16 @@ public class BlogService {
 		}	
 		
 		System.out.println("블로그서비스 blogBasicUpdate blogVo"+ blogVo);
-		
-		
 		return blogDao.blogBasicUpdate(blogVo);
 	}
+	
+	//post에 글쓰기
+	public int blogWrite(PostVo postVo) {	
+		System.out.println("블로그 서비스  blogWrite postVo" + postVo);
+		return postDao.insertPost(postVo);
+	}
+	
+	
+	
 
 }
