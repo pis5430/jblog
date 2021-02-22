@@ -142,18 +142,65 @@
 	})
 	
 	
+	//카테고리 삭제 (post가 있는경우 삭제할수 없다)
+	$(".text-center").on("click","#btnDateDel" , function(){
+		console.log("삭제 이미지 클릭")	
+		
+		//삭제를 위해 cateNo , id 필요
+		var categoryVo = {
+			id : $("[name='id']").val(),
+			cateNo : $("[name='cateNo']").val()
+		}
+		
+		console.log(categoryVo);
+		
+		//ajax 삭제오쳥
+		$.ajax({
+		//보낼때
+			url : "${pageContext.request.contextPath}/api/cate/cateDelete",		
+			type : "post",
+			//contentType : "application/json",
+			data : categoryVo,
+	
+			//받을때
+			dataType : "json",
+			success : function(count){
+				/*성공시 처리해야될 코드 작성*/
+				console.log(count);
+				
+				if(count == 1){ //삭제 성공
+					//count == 1 --> 삭제작업							
+					//cateNo 카테고리 안보이도록 처리
+					$("#t-"+categoryVo.cateNo).remove();
+					
+				}else{ //삭제실패
+					alert("삭제할 수 없습니다.");
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	});
+	
+	
+	
+	
 	//방명록 글 정도  + html조합하여 화면에 출력
 	function render(categoryVo , updown){
 		
 		//문자열로 만듬 , 소문자만 인식가능 ""안에
   		var str = "";
-		str += "<tr>";
-		str += "	<td>"+categoryVo.cateNo+"</td>";
-		str += "	<td>"+categoryVo.cateName+"</td>";
+		str += "<tr id='t-"+categoryVo.cateNo+"'>";
+		str += "	<td name='id' id=''>"+categoryVo.cateNo+"</td>";
+		str += "	<td name='cateName'>"+categoryVo.cateName+"</td>";
 		str += "	<td>"+categoryVo.postCount+"</td>";
 		str += "	<td>"+categoryVo.description+"</td>";
 		str += "	<td class='text-center'>";
-		str += "		<img class='btnCateDel' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
+		str += "		<a href='' id='btnDateDel'>";
+		str += "			<img class='btnCateDel' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
+		str += "		</a>";
 		str += "	</td>";
 		str += "</tr>";
 		

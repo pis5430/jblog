@@ -36,5 +36,12 @@ public class CategoryService {
 		return categoryDao.selectOne(no);
 		
 	}	
+	
+	// 카테고리 삭제
+	public int cateDelete(CategoryVo categoryVo) {
+		System.out.println("Service cateDelete()");
+		
+		return categoryDao.cateDelete(categoryVo);
+	}
 
 }

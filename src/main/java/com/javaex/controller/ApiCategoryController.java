@@ -37,6 +37,19 @@ public class ApiCategoryController {
 		return categoryService.cateInsert(categoryVo);
 	}
 	
+	//카테고리 삭제
+	@ResponseBody
+	@RequestMapping(value = "/cateDelete")
+	public int cateDelete(@ModelAttribute CategoryVo categoryVo) {
+		
+		System.out.println("ApiCategoryController/delete categoryVo:" + categoryVo);
+		
+		int count = categoryService.cateDelete(categoryVo); //삭제
+
+		
+		return count; //삭제
+	}
+	
 	
 
 }

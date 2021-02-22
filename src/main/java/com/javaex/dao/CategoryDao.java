@@ -44,11 +44,16 @@ public class CategoryDao {
 		
 		System.out.println("dao selectOne() no:" + no);
 		
-		return sqlSession.selectOne("cate.selectOne", no);
-
-		
+		return sqlSession.selectOne("cate.selectOne", no);	
 	}
 	
+	
+	//카테고리 삭제
+	public int cateDelete(CategoryVo categoryVo) {
+		System.out.println("dao cateDelete");
+		
+		return sqlSession.delete("cate.cateDelete", categoryVo);
+	}
 
 	
 	
