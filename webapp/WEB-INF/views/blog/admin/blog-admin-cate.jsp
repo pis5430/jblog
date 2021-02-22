@@ -114,7 +114,7 @@
 		str += "<tr>";
 		str += "	<td>"+categoryVo.cateNo+"</td>";
 		str += "	<td>"+categoryVo.cateName+"</td>";
-		str += "	<td></td>";
+		str += "	<td>"+categoryVo.postCount+"</td>";
 		str += "	<td>"+categoryVo.description+"</td>";
 		str += "	<td class='text-center'>";
 		str += "		<img class='btnCateDel' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
