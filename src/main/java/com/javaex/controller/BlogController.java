@@ -35,6 +35,10 @@ public class BlogController {
 		
 		//main페이지에 표시될 정보
 		model.addAttribute("blogVo", blogService.blogSelectOne(id));
+		
+		//카테고리 리스트 불러오기(제목)
+		List<CategoryVo> categoryList = categoryService.cateList(id);
+		model.addAttribute("cList", categoryList);
 
 		return "blog/blog-main";
 	}
