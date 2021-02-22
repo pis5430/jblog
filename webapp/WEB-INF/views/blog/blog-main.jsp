@@ -58,30 +58,35 @@
 			<!-- profilecate_area -->
 			
 			<div id="post_area">
-				<!-- 글이 있는경우 -->
-				<div id="postBox" class="clearfix">
-						<div id="postTitle" class="text-left"><strong>08.페이징</strong></div>
-						<div id="postDate" class="text-left"><strong>2020/07/23</strong></div>
-						<div id="postNick">${authUser.userName}(${authUser.id})님</div>
-				</div>
-				<!-- //postBox -->
-			
-				<div id="post" >
+				<c:choose>
+					<c:when test="${empty tMap.postVo}"> 
+						<!-- 글이 없는 경우 -->				
+						<div id="postBox" class="clearfix">
+									<div id="postTitle" class="text-left"><strong>등록된 글이 없습니다.</strong></div>
+									<div id="postDate" class="text-left"><strong></strong></div>
+									<div id="postNick"></div>
+						</div>
+					    
+						<div id="post" >
+						
+						</div>
+						
+						<!-- //post -->
+					</c:when>
+		 			<c:otherwise>	
+						<!-- 글이 있는경우 * 해당 카테고리에 제일 최근글-->
+						<div id="postBox" class="clearfix">
+								<div id="postTitle" class="text-left"><strong>${tMap.postVo.postTitle}</strong></div>
+								<div id="postDate" class="text-left"><strong>${tMap.postVo.regDate}</strong></div>
+								<div id="postNick">${blogVo.userName}(${blogVo.id})님</div>
+						</div>
+						<!-- //postBox -->
 					
-				</div>
-				<!-- //post -->
-				
-				<!-- 글이 없는 경우 -->				
-				<div id="postBox" class="clearfix">
-							<div id="postTitle" class="text-left"><strong>등록된 글이 없습니다.</strong></div>
-							<div id="postDate" class="text-left"><strong></strong></div>
-							<div id="postNick"></div>
-				</div>
-			    
-				<div id="post" >
-				
-				</div>
-				
+						<div id="post" >
+							${tMap.postVo.postContent}
+						</div>
+					</c:otherwise>
+				</c:choose>
 				
 				<div id="list">
 					<div id="listTitle" class="text-left"><strong>카테고리의 글</strong></div>
@@ -90,27 +95,13 @@
 							<col style="">
 							<col style="width: 20%;">
 						</colgroup>
-						
-						<tr>
-							<td class="text-left"><a href="">08.페이징</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">07.첨부파일_MultipartResolver</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">06.jquery_ajax</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">05.javaScript</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
-						<tr>
-							<td class="text-left"><a href="">04.spring_어플리케이션_아키텍쳐</a></td>
-							<td class="text-right">2020/07/23</td>
-						</tr>
+						<!-- postList출력 -->
+						<c:forEach items="${postList}" var="postList">
+							<tr>
+								<td class="text-left"><a href="${pageContext.request.contextPath}/${blogVo.id}?cateNo=${postList.cateNo}&postNo=${postList.postNo}">${postList.postTitle}</a></td>
+								<td class="text-right">${postList.regDate}</td>
+							</tr>
+						</c:forEach>
 						
 						
 					</table>

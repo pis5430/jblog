@@ -18,8 +18,6 @@ public class CategoryDao {
 	public List<CategoryVo> getCateList(String id){
 		System.out.println("dao getCateList() id :" +id);
 		
-		System.out.println();
-		
 		return sqlSession.selectList("cate.cateList" , id);		
 		
 	}

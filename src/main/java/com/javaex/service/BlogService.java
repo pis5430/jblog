@@ -4,6 +4,9 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.javaex.dao.BlogDao;
 import com.javaex.dao.PostDao;
 import com.javaex.vo.BlogVo;
+import com.javaex.vo.CategoryVo;
 import com.javaex.vo.PostVo;
 
 @Service
@@ -84,6 +88,34 @@ public class BlogService {
 	public int blogWrite(PostVo postVo) {	
 		System.out.println("블로그 서비스  blogWrite postVo" + postVo);
 		return postDao.insertPost(postVo);
+	}
+	
+	
+	//블로그 post 데이터 조회
+	public Map<String, Object> postList(int cateNo, int postNo) {
+		System.out.println("blogService.blogList() cateNo :"+cateNo +" postNo :" +postNo );
+		
+		Map<String, Object> tMap = new HashMap<String, Object>();
+		
+		//해당 카테고리에 연결된 postList
+		List<PostVo> postList = postDao.postList(cateNo);
+		
+		
+		if(postList.size() != 0) { //postList의 갯수가 0보다 많을때
+			//postNo가 0 일때
+			if(postNo == 0) {	
+				postNo = postList.get(0).getPostNo();
+			}
+		}
+		
+		PostVo postVo = postDao.postSelect(postNo);
+		
+		System.out.println("postList :" +postList + " postVo :"+postVo);
+		
+		tMap.put("postList", postList);
+		tMap.put("postVo", postVo);
+		
+		return tMap;
 	}
 	
 	

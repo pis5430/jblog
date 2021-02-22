@@ -1,6 +1,7 @@
 package com.javaex.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,17 +31,35 @@ public class BlogController {
 	
 	//블로그 main(header에서 블로그로 집입할때 id가져오기)
 	@RequestMapping(value = "/{id}", method = { RequestMethod.GET, RequestMethod.POST })
-	public String blogMain(@PathVariable("id") String id, Model model) {
-		System.out.println("블로그 컨트롤러 main , id : " +id);
+	public String blogMain(@PathVariable("id") String id, Model model,
+							@RequestParam(value="cateNo", required = false, defaultValue="-1") int cateNo,
+							@RequestParam(value="postNo", required = false, defaultValue="-1") int postNo) {
+		
+		System.out.println("블로그 컨트롤러 main , id : " +id +" cateNo : " +cateNo + " postNo : " +postNo);
 		
 		//main페이지에 표시될 정보
-		model.addAttribute("blogVo", blogService.blogSelectOne(id));
+		//model.addAttribute("blogVo", blogService.blogSelectOne(id));
+		BlogVo blogVo = blogService.blogSelectOne(id);
 		
 		//카테고리 리스트 불러오기(제목)
 		List<CategoryVo> categoryList = categoryService.cateList(id);
 		model.addAttribute("cList", categoryList);
+		
+		
+		//blog생성
+		if(blogVo != null) {	
+			Map<String, Object> tMap = blogService.postList(cateNo, postNo);
+			
+			model.addAttribute("blogVo", blogVo);
+			System.out.println("blogVo : " + blogVo);
+			model.addAttribute("tMap", tMap);
+			System.out.println("tMap : " + tMap);
+			
+			return "blog/blog-main";
+		} else { //아이디 정보가 없을 경우	
+			return "error/403";
+		}
 
-		return "blog/blog-main";
 	}
 	
 	//내 블로그 관리 - 기본설정
