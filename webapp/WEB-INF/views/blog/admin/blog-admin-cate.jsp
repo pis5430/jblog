@@ -69,7 +69,7 @@
 				<div id="btnArea">
 		      		<button id="btnAddCate" class="btn_l" type="submit" >카테고리추가</button>
 		      	</div>
-			
+				<input name="id" value="${authUser.id}">
 			</div>
 			<!-- //admin-content -->
 		</div>	
@@ -100,7 +100,43 @@
 
 	//카테고리 추가버튼 클릭할때
 	$("#btnAddCate").on("click" , function(){
-		console.log("카테고리 추가버튼 클릭")
+		console.log("카테고리 추가버튼 클릭");
+		
+		//카테고리 데이터 수집
+		var categoryVo ={			
+		    cateName : $("[name='name']").val(),
+			description : $("[name='desc']").val(),
+			id : $("[name='id']").val()	
+		};
+		
+		//console.log(categoryVo);
+		
+		//ajax방식으로 요청 (저장) , json으로 요청하는 법 (contentType씀)	
+		$.ajax({
+			//보낼때
+			url : "${pageContext.request.contextPath}/api/cate/cateInsert", 	 
+			type : "post",
+			//contentType : "application/json", //json으로 보낼때 사용
+			data : categoryVo, //링크 뒤에 붙는 정보를 date에 넣어줌 , JSON.stringify() json으로 변환,
+
+			//받을때
+			dataType : "json",
+			success : function(categoryVo){
+				/*성공시 처리해야될 코드 작성*/
+				console.log(categoryVo);
+				//console.log(guestBookVo.no);
+				//console.log(guestBookVo.name);
+				
+				render(categoryVo, "up"); //게스트북 정보 출력
+				
+				//입력폼 비우기
+				$("[name='name']").val("");
+				$("[name='desc']").val("");
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
 		
 		
 	})

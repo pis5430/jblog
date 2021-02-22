@@ -22,6 +22,39 @@
 		]]>
 	</select>
 	
+	<!-- ajax 글저장 : 시퀀스를 먼저 건드리고 그 시퀀스 값을 values에 넣어주는 방법-->
+	<insert id="insertSelectKey" parameterType="CategoryVo">
+		
+		<!-- 시퀀스 값을 먼저 건드림 , dual : 가상의 테이블 -->
+		<selectKey keyProperty="cateNo" resultType="int" order="BEFORE">	
+				select SEQ_CATEGORY_NO.nextval from dual	
+		</selectKey>
+	
+		<!-- 카테고리 등록 -->
+		<![CDATA[
+		insert into category
+		values (#{cateNo},
+				#{id},
+				#{cateName},
+				#{description}, 
+				sysdate
+				)
+		]]>
+	</insert>
+	
+	<!-- 카테고리 한개만 가져오기/ 추가된것 화면에 표시하기위해 -->
+	<select id="selectOne" parameterType="int" resultType="CategoryVo">
+		<![CDATA[
+			select cateNo,
+				   id,
+				   cateName,
+				   description,
+				   to_char(regDate, 'YYYY-MM-DD HH:MI:SS') regDate
+			from category	   	
+			where cateNo = #{cateNo}
+		]]>
+	</select>
+	
 	
 	<!-- post갯수 ,  카테고리별 ,id일치  - 서브쿼리로 넣는게 좀더 간결한것 같음..
 	<select id="postCount"  parameterType="string" resultType="int" >

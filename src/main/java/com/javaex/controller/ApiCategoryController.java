@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,16 @@ public class ApiCategoryController {
 		
 		return categoryService.cateList(id);
 	}
+	
+	//카테고리 추가
+	@ResponseBody 
+	@RequestMapping(value = "/cateInsert")
+	public CategoryVo cateInsert(@ModelAttribute CategoryVo categoryVo) {
+		System.out.println("ApiCategoryController /cateInsert  categoryVo" +  categoryVo);
+		
+		return categoryService.cateInsert(categoryVo);
+	}
+	
 	
 
 }
