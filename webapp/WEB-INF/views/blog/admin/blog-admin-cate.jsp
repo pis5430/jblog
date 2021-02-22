@@ -69,7 +69,7 @@
 				<div id="btnArea">
 		      		<button id="btnAddCate" class="btn_l" type="submit" >카테고리추가</button>
 		      	</div>
-				<input name="id" value="${authUser.id}">
+				<input type="hidden" name="id" value="${authUser.id}">
 			</div>
 			<!-- //admin-content -->
 		</div>	
@@ -106,7 +106,7 @@
 		var categoryVo ={			
 		    cateName : $("[name='name']").val(),
 			description : $("[name='desc']").val(),
-			id : $("[name='id']").val()	
+			id : "${authUser.id}"
 		};
 		
 		//console.log(categoryVo);
@@ -143,44 +143,56 @@
 	
 	
 	//카테고리 삭제 (post가 있는경우 삭제할수 없다)
-	$(".text-center").on("click","#btnDateDel" , function(){
-		console.log("삭제 이미지 클릭")	
+	$("#cateList").on("click","img" , function(){
+		event.preventDefault();
+		console.log("삭제 이미지 클릭");	
 		
-		//삭제를 위해 cateNo , id 필요
-		var categoryVo = {
-			id : $("[name='id']").val(),
-			cateNo : $("[name='cateNo']").val()
-		}
+		//삭제를 위해 cateNo , id 필요 , postcount가  0보다 크면 삭제불가
+		var id = "${authUser.id}";
+		var cateNo = $(this).data('cateno');
+		var postCount = $(this).data('postcount');
 		
-		console.log(categoryVo);
 		
-		//ajax 삭제오쳥
-		$.ajax({
-		//보낼때
-			url : "${pageContext.request.contextPath}/api/cate/cateDelete",		
-			type : "post",
-			//contentType : "application/json",
-			data : categoryVo,
-	
-			//받을때
-			dataType : "json",
-			success : function(count){
-				/*성공시 처리해야될 코드 작성*/
-				console.log(count);
-				
-				if(count == 1){ //삭제 성공
-					//count == 1 --> 삭제작업							
-					//cateNo 카테고리 안보이도록 처리
-					$("#t-"+categoryVo.cateNo).remove();
+		console.log("cateNo : "+cateNo+" postCount :" + postCount + " id :" + id);
+		
+		
+		//if로만 빼주면 오류남 ,else로 삭제요청으로 갈수있도록 해줌
+		if(postCount > 0){
+			alert("post가 남아있어 삭제할 수 없습니다. ");
+		}else{
+		
+			//ajax 삭제오쳥
+			$.ajax({
+			//보낼때
+				url : "${pageContext.request.contextPath}/api/cate/cateDelete",		
+				type : "post",
+				//contentType : "application/json",
+				data : {cateNo:cateNo , postCount:postCount , id:id},
+		
+				//받을때
+				dataType : "json",
+				success : function(count){
+					/*성공시 처리해야될 코드 작성*/
+					console.log(count);
 					
-				}else{ //삭제실패
-					alert("삭제할 수 없습니다.");
+					if(count == 1){
+						//count == 1 --> 삭제작업						
+						//no 테이블(글) 안보이도록 처리
+						$("#t-"+cateNo).remove();
+						
+						
+					}else{
+						alert("삭제할 수 없습니다.");
+					}
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
 				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		});
+			});
+		
+		};
+		
 		
 	});
 	
@@ -195,12 +207,10 @@
 		str += "<tr id='t-"+categoryVo.cateNo+"'>";
 		str += "	<td name='id' id=''>"+categoryVo.cateNo+"</td>";
 		str += "	<td name='cateName'>"+categoryVo.cateName+"</td>";
-		str += "	<td>"+categoryVo.postCount+"</td>";
+		str += "	<td name='postCount'>"+categoryVo.postCount+"</td>";
 		str += "	<td>"+categoryVo.description+"</td>";
-		str += "	<td class='text-center'>";
-		str += "		<a href='' id='btnDateDel'>";
-		str += "			<img class='btnCateDel' src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
-		str += "		</a>";
+		str += "	<td class='text-center'>";	
+		str += "		<img class='btnCateDel' data-cateno="+categoryVo.cateNo+ " data-postcount="+categoryVo.postCount+" src='${pageContext.request.contextPath}/assets/images/delete.jpg'>";
 		str += "	</td>";
 		str += "</tr>";
 		
