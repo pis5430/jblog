@@ -1,11 +1,11 @@
 --------------------------------------------------------
---  파일이 생성됨 - 월요일-2월-22-2021   
+--  파일이 생성됨 - 화요일-2월-23-2021   
 --------------------------------------------------------
 --------------------------------------------------------
 --  DDL for Sequence SEQ_CATEGORY_NO
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "JBLOG"."SEQ_CATEGORY_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 4 NOCACHE  NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "JBLOG"."SEQ_CATEGORY_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 10 NOCACHE  NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_COMMENTS_NO
 --------------------------------------------------------
@@ -15,7 +15,7 @@
 --  DDL for Sequence SEQ_POST_NO
 --------------------------------------------------------
 
-   CREATE SEQUENCE  "JBLOG"."SEQ_POST_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 NOCACHE  NOORDER  NOCYCLE ;
+   CREATE SEQUENCE  "JBLOG"."SEQ_POST_NO"  MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 3 NOCACHE  NOORDER  NOCYCLE ;
 --------------------------------------------------------
 --  DDL for Sequence SEQ_USERS_NO
 --------------------------------------------------------
@@ -104,13 +104,15 @@ Insert into JBLOG.BLOG (ID,BLOGTITLE,LOGOFILE) values ('12345','김이슬의 블
 REM INSERTING into JBLOG.CATEGORY
 SET DEFINE OFF;
 Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (1,'555','카테고리명','카테고리설명',to_date('21/02/22','RR/MM/DD'));
-Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (2,'555','카테고리명2','카테고리설명2',to_date('21/02/22','RR/MM/DD'));
-Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (3,'555','카테고리명3','카테고리설명3',to_date('21/02/22','RR/MM/DD'));
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (8,'555','테스트2','테스트2',to_date('21/02/22','RR/MM/DD'));
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (9,'555','테스트3','테스트3',to_date('21/02/22','RR/MM/DD'));
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (5,'555','카테고리 추가2','카테고리 추가2',to_date('21/02/22','RR/MM/DD'));
+Insert into JBLOG.CATEGORY (CATENO,ID,CATENAME,DESCRIPTION,REGDATE) values (6,'555','테스트','테스트',to_date('21/02/22','RR/MM/DD'));
 REM INSERTING into JBLOG.COMMENTS
 SET DEFINE OFF;
 REM INSERTING into JBLOG.POST
 SET DEFINE OFF;
-Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (1,1,'글제목','글내용',to_date('21/02/22','RR/MM/DD'));
+Insert into JBLOG.POST (POSTNO,CATENO,POSTTITLE,POSTCONTENT,REGDATE) values (2,9,'포스트 테스트 제목 1','포스트 테스트 내용1',to_date('21/02/22','RR/MM/DD'));
 REM INSERTING into JBLOG.USERS
 SET DEFINE OFF;
 Insert into JBLOG.USERS (USERNO,ID,USERNAME,PASSWORD,JOINDATE) values (1,'id','name','1234',to_date('21/02/18','RR/MM/DD'));
